@@ -1,7 +1,20 @@
 const { Todo } = require("../models/todo");
 const express = require("express");
 const Joi = require("joi");
+
 const router = express.Router();
+
+router.get("/", async (req, res) => {
+  // Add logic here while retrieveing the data.ex: filter
+  try {
+    const todos = await Todo.find().sort({ date: -1 });
+
+    res.send(todos);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error.message);
+  }
+});
 
 router.post("/", async (req, res) => {
   const schema = Joi.object({
@@ -26,6 +39,19 @@ router.post("/", async (req, res) => {
   try {
     todo = await todo.save();
     res.send(todo);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error.message);
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  //deleteOne()
+  //deleteMany()
+  //findByIdAndDelete()
+  try {
+    const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
+    res.send(deletedTodo);
   } catch (error) {
     res.status(500).send(error.message);
     console.log(error.message);
