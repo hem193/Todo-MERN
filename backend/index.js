@@ -1,7 +1,9 @@
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
+
 require("dotenv").config();
+
+const app = express();
 
 app.get("/", (req, res) => {
   res.send("Welcome to our todos api...");
